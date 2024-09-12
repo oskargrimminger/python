@@ -18,3 +18,4 @@ result = lengthOfLongestSubstring(input_string)
 
 print(result)
 
+
