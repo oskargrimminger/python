@@ -12,8 +12,7 @@ class Board:
             self.board[row][col] = player
             return True
         else:
-            print("Invalid move, try again.")
-            return False
+            return False  
 
     def check_winner(self, player):
         for row in self.board:
@@ -58,6 +57,6 @@ class Game:
                 print("Invalid input. Please enter a number between 0 and 2.")
 
 
-# Create a Game instance and start playing
-game = Game()
-game.play_game()
+if __name__ == "__main__":
+    game = Game()
+    game.play_game()
