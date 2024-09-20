@@ -8,6 +8,7 @@ class TestBoard(unittest.TestCase):
     def test_make_move_valid(self):
         self.assertTrue(self.board.make_move('X', 0, 0))
         self.assertEqual(self.board.board[0][0], 'X')
+        
 
     def test_make_move_invalid(self):
         self.board.make_move('X', 0, 0)       
