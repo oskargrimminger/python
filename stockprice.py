@@ -80,12 +80,48 @@ def calculate_candlestick(data, company):
     }
 
 
+def calculate_percentage_change(open_price, other_price):
+    return ((other_price - open_price) / open_price) * 100
+
+
+def find_greatest_change(data):
+    if len(data) == 0:
+        return None
+    
+    greatest_change = -float('inf')  
+    greatest_company = None
+
+    for company in ['MSFT', 'IBM', 'SBUX', 'AAPL', 'GSPC']:
+        candlestick = calculate_candlestick(data, company)
+        if candlestick:
+            
+            change_high = calculate_percentage_change(candlestick['Open'], candlestick['High'])
+            change_low = calculate_percentage_change(candlestick['Open'], candlestick['Low'])
+
+            
+            max_change = max(change_high, abs(change_low))
+
+        
+            if max_change > greatest_change:
+                greatest_change = max_change
+                greatest_company = (company, max_change)
+
+    return greatest_company
+
+
 for month, data in monthly_data.items():
-    print(f"Candlestick data for {month}:")
+    print(f"Candlestick data for {month}:")    
     for company in ['MSFT', 'IBM', 'SBUX', 'AAPL', 'GSPC']:
         candlestick = calculate_candlestick(data, company)
         if candlestick:
             print(f"{company}: {candlestick}")
-    print("\n")
 
+   
+    greatest_change_company = find_greatest_change(data)
 
+    if greatest_change_company:
+        company, change = greatest_change_company
+        print(f"Company with the greatest change in {month} is {company} with a change of {change:.2f}%.\n")
+    else:
+        print(f"No Data for this {Month}")
+    
