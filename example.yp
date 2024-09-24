@@ -1,0 +1,57 @@
+import hashlib
+
+class UserAccount:
+    def __init__(self):
+        self.accounts = {}  # Dictionary to store username and hashed password
+
+    def hash_password(self, password):
+        """Hash a password using SHA-256"""
+        return hashlib.sha256(password.encode()).hexdigest()
+
+    def register(self, username, password):
+        """Register a new user account with username and hashed password"""
+        if username in self.accounts:
+            return "Username already exists."
+        hashed_password = self.hash_password(password)
+        self.accounts[username] = hashed_password
+        return "User registered successfully."
+
+    def login(self, username, password):
+        """Attempt to log in with a username and password"""
+        if username not in self.accounts:
+            return "Invalid username"
+        hashed_password = self.hash_password(password)
+        if self.accounts[username] != hashed_password:
+            return "Invalid password"
+        return "Login successful"
+
+# Create an instance of UserAccount to store user data
+account_system = UserAccount()
+
+# Simulate registration and login
+while True:
+    print("\n1. Register")
+    print("2. Login")
+    print("3. Exit")
+    
+    choice = input("Choose an option: ")
+
+    if choice == "1":
+        # Register a new user
+        username = input("Enter username to register: ")
+        password = input("Enter password to register: ")
+        print(account_system.register(username, password))
+
+    elif choice == "2":
+        # Attempt to log in
+        username = input("Enter username to login: ")
+        password = input("Enter password to login: ")
+        print(account_system.login(username, password))
+
+    elif choice == "3":
+        # Exit the program
+        print("Exiting...")
+        break
+
+    else:
+        print("Invalid option. Please choose 1, 2, or 3.")
